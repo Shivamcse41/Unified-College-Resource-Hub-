@@ -1,0 +1,77 @@
+<!-- admin.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - PDF Notes System</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabaseClient.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔐 Admin Dashboard</h1>
+            <p>Review pending uploads and manage approved PDF notes</p>
+        </header>
+
+        <div style="text-align: right; margin-bottom: 20px;">
+            <a href="index.html" style="color: #667eea; text-decoration: none; margin-right: 15px;">User Dashboard</a>
+            <a href="public.html" style="color: #667eea; text-decoration: none; margin-right: 15px;">Public Notes</a>
+            <button onclick="handleLogout()" class="secondary">Logout</button>
+        </div>
+
+        <!-- Redirect to login if not authenticated -->
+        <div id="redirectToLogin" style="display: none;">
+            <div class="message info">
+                <h2>Please Login</h2>
+                <p>You need to login as admin to access this page.</p>
+                <a href="admin-login.html" style="color: #667eea; font-weight: bold;">Go to Admin Login</a>
+            </div>
+        </div>
+
+        <!-- Not Admin Message -->
+        <div id="notAdminMessage" style="display: none;">
+            <div class="message error">
+                <h2>Access Denied</h2>
+                <p>You are not authorized to access this page. Only administrators can view this dashboard.</p>
+                <a href="index.html" style="color: #667eea;">Go to User Dashboard</a>
+            </div>
+        </div>
+
+        <!-- Admin Content -->
+        <div id="adminContent" style="display: none;">
+            <div id="adminMessage"></div>
+
+            <!-- Pending PDFs Section -->
+            <section style="margin-bottom: 40px;">
+                <h2>Pending PDFs</h2>
+                <div id="pendingList">
+                    <div class="loading">Loading pending uploads...</div>
+                </div>
+            </section>
+
+            <!-- Approved PDFs Section (Admin-only delete) -->
+            <section>
+                <h2>Approved PDFs (Delete / Manage)</h2>
+                <p style="margin-bottom: 10px; color: #555; font-size: 0.95rem;">
+                    Only admins can see this section. Deleting a note here will also remove it from the public notes page.
+                </p>
+                <div id="approvedList">
+                    <div class="loading">Loading approved notes...</div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loadingState" class="loading">
+            Checking admin access...
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
+

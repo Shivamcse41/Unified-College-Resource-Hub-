@@ -1,0 +1,247 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unified College Resource Hub - PDF Notes System</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabaseClient.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="modern-header">
+            <div class="header-content">
+                <h1>📚 Unified College Resource Hub</h1>
+                <p>Share and access PDF notes and PYQs for All branches</p>
+                <p style="font-weight: 600; margin-top: 4px;">
+                    Government polytechnic Aurangabad , Dhanari Bihar
+                </p>
+            </div>
+        </header>
+
+        <!-- Login Section (shown when not logged in) -->
+        <div id="loginSection" class="login-container modern-auth-panel">
+            <div class="auth-header">
+                <h2>Welcome Back</h2>
+                <p>Login to your account</p>
+            </div>
+            <div id="loginMessage"></div>
+            <form id="loginForm" class="modern-form">
+                <div class="form-group">
+                    <label for="loginEmail">
+                        <span class="label-icon">📧</span> Email Address
+                    </label>
+                    <input type="email" id="loginEmail" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">
+                        <span class="label-icon">🔒</span> Password
+                    </label>
+                    <input type="password" id="loginPassword" required placeholder="Enter your password">
+                </div>
+                <button type="submit" class="modern-btn primary-btn">
+                    <span>Login</span>
+                    <span class="btn-icon">→</span>
+                </button>
+            </form>
+            <div class="auth-footer">
+                <p><a href="#" id="forgotPasswordLink" class="auth-link">Forgot Password?</a></p>
+                <p>Don't have an account? <a href="#" id="signupLink" class="auth-link">Sign up</a></p>
+            </div>
+        </div>
+
+        <!-- Forgot Password Section (hidden by default) -->
+        <div id="forgotPasswordSection" class="login-container modern-auth-panel" style="display: none;">
+            <div class="auth-header">
+                <h2>Reset Password</h2>
+                <p>Enter your email to receive a password reset link</p>
+            </div>
+            <div id="forgotPasswordMessage"></div>
+            <form id="forgotPasswordForm" class="modern-form">
+                <div class="form-group">
+                    <label for="forgotPasswordEmail">
+                        <span class="label-icon">📧</span> Email Address
+                    </label>
+                    <input type="email" id="forgotPasswordEmail" required placeholder="Enter your email">
+                </div>
+                <button type="submit" class="modern-btn primary-btn">
+                    <span>Send Reset Link</span>
+                    <span class="btn-icon">→</span>
+                </button>
+            </form>
+            <div class="auth-footer">
+                <p><a href="#" id="backToLoginLink" class="auth-link">← Back to Login</a></p>
+            </div>
+        </div>
+
+        <!-- Signup Section (hidden by default) -->
+        <div id="signupSection" class="login-container modern-auth-panel" style="display: none;">
+            <div class="auth-header">
+                <h2>Create Account</h2>
+                <p>Join us and start sharing notes</p>
+            </div>
+            <div id="signupMessage"></div>
+            <form id="signupForm" class="modern-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="signupFirstName">
+                            <span class="label-icon">👤</span> First Name
+                        </label>
+                        <input type="text" id="signupFirstName" required placeholder="Enter first name">
+                    </div>
+                    <div class="form-group">
+                        <label for="signupLastName">
+                            <span class="label-icon">👤</span> Last Name
+                        </label>
+                        <input type="text" id="signupLastName" required placeholder="Enter last name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="signupPhone">
+                        <span class="label-icon">📱</span> Phone Number
+                    </label>
+                    <input type="tel" id="signupPhone" required placeholder="Enter phone number (e.g., +91 9876543210)" pattern="[+]?[0-9\s\-]{10,15}">
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">
+                        <span class="label-icon">📧</span> Email Address
+                    </label>
+                    <input type="email" id="signupEmail" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="signupUserId">
+                        <span class="label-icon">🆔</span> User ID
+                    </label>
+                    <input type="text" id="signupUserId" required placeholder="Enter your unique User ID (e.g., CS2024001)" pattern="[A-Za-z0-9_\-]{3,20}" title="User ID should be 3-20 characters (letters, numbers, underscore, hyphen only)">
+                    <small style="color: #666; font-size: 0.85em; display: block; margin-top: 5px;">Choose a unique User ID (3-20 characters, letters, numbers, underscore, hyphen only)</small>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">
+                        <span class="label-icon">🔒</span> Password
+                    </label>
+                    <input type="password" id="signupPassword" required minlength="6" placeholder="Create a password (min 6 characters)">
+                </div>
+                <button type="submit" class="modern-btn primary-btn">
+                    <span>Create Account</span>
+                    <span class="btn-icon">→</span>
+                </button>
+            </form>
+            <div class="auth-footer">
+                <p>Already have an account? <a href="#" id="loginLink" class="auth-link">Login</a></p>
+            </div>
+        </div>
+
+        <!-- User Dashboard (shown when logged in) -->
+        <div id="userDashboard" style="display: none;">
+            <div class="dashboard-nav">
+                <div class="nav-links">
+                    <a href="public.html" class="nav-link">
+                        <span>📖</span> View All Notes
+                    </a>
+                    <a href="admin-login.html" class="nav-link">
+                        <span>⚙️</span> Admin Panel
+                    </a>
+                </div>
+                <div class="nav-right">
+                    <!-- Notification Bell -->
+                    <div class="notification-container">
+                        <button onclick="toggleNotifications()" class="notification-btn" id="notificationBtn">
+                            <span>🔔</span>
+                            <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
+                        </button>
+                        <!-- Notification Panel -->
+                        <div class="notification-panel" id="notificationPanel" style="display: none;">
+                            <div class="notification-header">
+                                <h4>Notifications</h4>
+                                <button onclick="markAllAsRead()" class="mark-all-read-btn">Mark all as read</button>
+                            </div>
+                            <div class="notification-list" id="notificationList">
+                                <div class="loading">Loading notifications...</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="handleLogout()" class="logout-btn">
+                        <span>🚪</span> Logout
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-button active" onclick="switchTab('upload')">Upload PDF</button>
+                <button class="tab-button" onclick="switchTab('myUploads')">My Uploads</button>
+                <button class="tab-button" onclick="switchTab('profile')">Profile</button>
+            </div>
+
+            <!-- Tab 1: Upload PDF -->
+            <div id="uploadTab" class="tab-content active">
+                <div class="tab-header">
+                    <h3>📤 Upload New PDF Note</h3>
+                    <p>Share your study materials with the community</p>
+                </div>
+                <div id="uploadMessage"></div>
+                <form id="uploadForm" class="modern-upload-form">
+                    <div class="form-group">
+                        <label for="noteTitle">
+                            <span class="label-icon">📝</span> Title
+                        </label>
+                        <input type="text" id="noteTitle" required placeholder="e.g., Data Structures - Binary Trees">
+                    </div>
+                    <div class="form-group">
+                        <label for="noteSubject">
+                            <span class="label-icon">📚</span> Branch
+                        </label>
+                        <input type="text" id="noteSubject" required placeholder="e.g., Computer Science">
+                    </div>
+                    <div class="form-group">
+                        <label for="noteFile">
+                            <span class="label-icon">📄</span> PDF File
+                        </label>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="noteFile" accept=".pdf" required>
+                            <div class="file-input-label">
+                                <span class="file-icon">📎</span>
+                                <span class="file-text">Choose PDF file</span>
+                            </div>
+                        </div>
+                        <small class="form-hint">Maximum file size: 10 MB</small>
+                    </div>
+                    <button type="submit" class="modern-btn primary-btn upload-btn">
+                        <span>📤 Upload PDF</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Tab 2: My Uploads -->
+            <div id="myUploadsTab" class="tab-content">
+                <div class="tab-header">
+                    <h3>📋 My Uploads</h3>
+                    <p>Manage your uploaded notes and check their status</p>
+                </div>
+                <div id="myUploadsMessage"></div>
+                <div id="myUploadsList">
+                    <div class="loading">Loading your uploads...</div>
+                </div>
+            </div>
+
+            <!-- Tab 3: Profile -->
+            <div id="profileTab" class="tab-content" style="display: none;">
+                <div class="tab-header">
+                    <h3>👤 My Profile</h3>
+                    <p>View and manage your account information</p>
+                </div>
+                <div id="profileContent">
+                    <div class="loading">Loading profile...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="user.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,65 @@
+<!-- admin-login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - PDF Notes System</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabaseClient.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔐 Admin Login</h1>
+            <p>Only administrators can access this page</p>
+        </header>
+
+        <div class="login-container">
+            <div id="loginMessage"></div>
+            
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="adminEmail">Admin Email:</label>
+                    <input type="email" id="adminEmail" required placeholder="admin@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Password:</label>
+                    <input type="password" id="adminPassword" required>
+                </div>
+                <button type="submit">Login as Admin</button>
+            </form>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <p><a href="#" id="adminForgotPasswordLink" style="color: #667eea; text-decoration: none;">Forgot Password?</a></p>
+                <a href="index.html" style="color: #667eea; text-decoration: none;">← Back to User Dashboard</a>
+            </div>
+
+            <!-- Forgot Password Section (hidden by default) -->
+            <div id="adminForgotPasswordSection" class="login-container modern-auth-panel" style="display: none; margin-top: 20px;">
+                <div class="auth-header">
+                    <h2>Reset Password</h2>
+                    <p>Enter your email to receive a password reset link</p>
+                </div>
+                <div id="adminForgotPasswordMessage"></div>
+                <form id="adminForgotPasswordForm" class="modern-form">
+                    <div class="form-group">
+                        <label for="adminForgotPasswordEmail">Email Address:</label>
+                        <input type="email" id="adminForgotPasswordEmail" required placeholder="Enter your email">
+                    </div>
+                    <button type="submit" class="modern-btn primary-btn">Send Reset Link</button>
+                </form>
+                <div style="text-align: center; margin-top: 20px;">
+                    <a href="#" id="adminBackToLoginLink" style="color: #667eea; text-decoration: none;">← Back to Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin-login.js"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,24 @@
+{
+  "rewrites": [
+    {
+      "source": "/reset-password.html",
+      "destination": "/reset-password.html"
+    },
+    {
+      "source": "/reset-password",
+      "destination": "/reset-password.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/reset-password.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    }
+  ]
+}
+

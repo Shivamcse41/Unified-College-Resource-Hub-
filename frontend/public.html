@@ -1,0 +1,39 @@
+<!-- public.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Notes - PDF Notes System</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabaseClient.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📖 All Approved Notes</h1>
+            <p>Browse and download approved PDF notes and PYQs</p>
+        </header>
+
+        <div style="text-align: right; margin-bottom: 20px;">
+            <a href="index.html" style="color: #667eea; text-decoration: none; margin-right: 15px;">User Dashboard</a>
+            <a href="admin.html" style="color: #667eea; text-decoration: none; margin-right: 15px;">Admin Panel</a>
+        </div>
+
+        <!-- Search Box -->
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search by title or branch..." onkeyup="filterNotes()">
+        </div>
+
+        <!-- Notes List -->
+        <div id="notesList">
+            <div class="loading">Loading approved notes...</div>
+        </div>
+    </div>
+
+    <script src="public.js"></script>
+</body>
+</html>
+
