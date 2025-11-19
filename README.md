@@ -60,7 +60,7 @@ A simple web application for students to upload and share PDF notes and previous
 2. Click "Create a new bucket" (or "New bucket")
 3. Name it: `notes-private` (must be exactly this name)
 4. **Important**: Make sure it's set to **Private** (uncheck "Public bucket")
-5. File size limit: 10 MB (10485760 bytes) or leave default
+5. File size limit: 50 MB (52428800 bytes) or leave default
 6. Click "Create bucket"
 
 ### 4. Set Up Storage Policies (CRITICAL!)
@@ -160,8 +160,8 @@ Then open your browser and go to:
 
 1. **Sign Up / Login**: Users create an account or login using email and password
 2. **Upload PDF**: 
-   - User fills in title and subject
-   - Selects a PDF file (max 10 MB)
+   - User fills in title and selects the correct branch (Civil, Electrical, Electronics, Mechanical, CSE)
+   - Selects a PDF file (max 50 MB)
    - File is uploaded to `notes-private/pending/{noteId}.pdf`
    - A record is created in the `notes` table with status = `pending`
 3. **My Uploads**: Users can see all their uploads and their status
@@ -184,9 +184,11 @@ Then open your browser and go to:
 ### Public Notes Flow
 
 1. **No Login Required**: Anyone can access the public notes page
-2. **View Approved**: Shows all notes with status = `approved`
-3. **Search**: Client-side search by title or subject
-4. **View PDF**: Clicking "View PDF" generates a signed URL (valid for 60 seconds) and opens in a new tab
+2. **Branch Sections**: Notes are auto-grouped into the 5 college branches (Civil, Electrical, Electronics, Mechanical, Computer Science)
+3. **Branch Filter**: Dropdown filter lets you focus on a single branch at a time
+4. **View Approved**: Shows all notes with status = `approved`
+5. **Search**: Client-side search by title or subject (respects current branch filter)
+6. **View PDF**: Clicking "View PDF" generates a signed URL (valid for 60 seconds) and opens in a new tab
 
 ## File Storage
 

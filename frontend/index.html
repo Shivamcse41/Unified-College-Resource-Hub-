@@ -17,7 +17,7 @@
                 <h1>📚 Unified College Resource Hub</h1>
                 <p>Share and access PDF notes and PYQs for All branches</p>
                 <p style="font-weight: 600; margin-top: 4px;">
-                    Government polytechnic Aurangabad , Dhanari Bihar
+                    Government Polytechnic Aurangabad , Dhanari Bihar
                 </p>
             </div>
         </header>
@@ -194,7 +194,15 @@
                         <label for="noteSubject">
                             <span class="label-icon">📚</span> Branch
                         </label>
-                        <input type="text" id="noteSubject" required placeholder="e.g., Computer Science">
+                        <select id="noteSubject" required>
+                            <option value="" disabled selected>Select your branch</option>
+                            <option value="Civil Engineering">Civil Engineering</option>
+                            <option value="Electrical Engineering">Electrical Engineering</option>
+                            <option value="Electronics Engineering">Electronics Engineering</option>
+                            <option value="Mechanical Engineering">Mechanical Engineering</option>
+                            <option value="Computer Science and Engineering">Computer Science and Engineering</option>
+                        </select>
+                        <small class="form-hint">Choose the correct branch so your PDF appears in the right section.</small>
                     </div>
                     <div class="form-group">
                         <label for="noteFile">
@@ -207,7 +215,7 @@
                                 <span class="file-text">Choose PDF file</span>
                             </div>
                         </div>
-                        <small class="form-hint">Maximum file size: 10 MB</small>
+                        <small class="form-hint">Maximum file size: 50 MB</small>
                     </div>
                     <button type="submit" class="modern-btn primary-btn upload-btn">
                         <span>📤 Upload PDF</span>

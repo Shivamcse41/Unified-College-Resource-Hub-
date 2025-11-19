@@ -25,11 +25,72 @@
         <!-- Search Box -->
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="Search by title or branch..." onkeyup="filterNotes()">
+            <select id="branchFilter" aria-label="Filter notes by branch" onchange="setBranchFilter(this.value)">
+                <option value="all" selected>All Branches</option>
+                <option value="civil">Civil Engineering</option>
+                <option value="electrical">Electrical Engineering</option>
+                <option value="electronics">Electronics Engineering</option>
+                <option value="mechanical">Mechanical Engineering</option>
+                <option value="cse">Computer Science and Engineering</option>
+            </select>
         </div>
 
         <!-- Notes List -->
-        <div id="notesList">
-            <div class="loading">Loading approved notes...</div>
+        <div id="notesList" class="branch-sections">
+            <section class="branch-section" data-branch="civil">
+                <div class="branch-header">
+                    <h2>🏗️ Civil Engineering</h2>
+                    <p>Structures, surveying, transportation and construction planning</p>
+                </div>
+                <div class="branch-cards">
+                    <div class="loading">Loading approved notes...</div>
+                </div>
+                <div class="branch-empty" style="display: none;">No approved notes available for Civil Engineering yet.</div>
+            </section>
+
+            <section class="branch-section" data-branch="electrical">
+                <div class="branch-header">
+                    <h2>⚡ Electrical Engineering</h2>
+                    <p>Power systems, machines, control systems and circuits</p>
+                </div>
+                <div class="branch-cards">
+                    <div class="loading">Loading approved notes...</div>
+                </div>
+                <div class="branch-empty" style="display: none;">No approved notes available for Electrical Engineering yet.</div>
+            </section>
+
+            <section class="branch-section" data-branch="electronics">
+                <div class="branch-header">
+                    <h2>📡 Electronics Engineering</h2>
+                    <p>Analog/digital electronics, communication systems and embedded</p>
+                </div>
+                <div class="branch-cards">
+                    <div class="loading">Loading approved notes...</div>
+                </div>
+                <div class="branch-empty" style="display: none;">No approved notes available for Electronics Engineering yet.</div>
+            </section>
+
+            <section class="branch-section" data-branch="mechanical">
+                <div class="branch-header">
+                    <h2>⚙️ Mechanical Engineering</h2>
+                    <p>Manufacturing, thermodynamics, design and industrial engineering</p>
+                </div>
+                <div class="branch-cards">
+                    <div class="loading">Loading approved notes...</div>
+                </div>
+                <div class="branch-empty" style="display: none;">No approved notes available for Mechanical Engineering yet.</div>
+            </section>
+
+            <section class="branch-section" data-branch="cse">
+                <div class="branch-header">
+                    <h2>💻 Computer Science and Engineering</h2>
+                    <p>Programming, data structures, AI/ML, databases and software design</p>
+                </div>
+                <div class="branch-cards">
+                    <div class="loading">Loading approved notes...</div>
+                </div>
+                <div class="branch-empty" style="display: none;">No approved notes available for Computer Science and Engineering yet.</div>
+            </section>
         </div>
     </div>
 

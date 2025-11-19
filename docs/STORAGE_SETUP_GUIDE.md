@@ -16,7 +16,7 @@ This guide will help you set up the `notes-private` storage bucket and configure
    - Fill in the details:
      - **Name**: `notes-private` (must be exactly this name)
      - **Public bucket**: **UNCHECKED** (make sure it's **PRIVATE**)
-     - **File size limit**: Leave default or set to 10 MB (10485760 bytes)
+     - **File size limit**: Leave default or set to 50 MB (52428800 bytes)
      - **Allowed MIME types**: Leave empty (allows all types) OR enter `application/pdf` to restrict to PDFs only
    - Click **"Create bucket"**
 

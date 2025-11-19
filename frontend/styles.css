@@ -185,7 +185,8 @@ input[type="email"],
 input[type="password"],
 input[type="text"],
 input[type="tel"],
-input[type="file"] {
+input[type="file"],
+select {
     width: 100%;
     padding: 14px 16px;
     border: 2px solid #e0e0e0;
@@ -198,7 +199,8 @@ input[type="file"] {
 input[type="email"]:focus,
 input[type="password"]:focus,
 input[type="text"]:focus,
-input[type="tel"]:focus {
+input[type="tel"]:focus,
+select:focus {
     outline: none;
     border-color: #667eea;
     background: white;
@@ -465,6 +467,54 @@ tr:hover {
     gap: 6px;
 }
 
+/* Branch sections */
+.branch-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+}
+
+.branch-section {
+    border: 1px solid #e9ecef;
+    border-radius: 16px;
+    padding: 24px;
+    background: #fafbff;
+    box-shadow: 0 6px 25px rgba(102, 126, 234, 0.08);
+}
+
+.branch-header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-bottom: 1px solid #e6e6ec;
+    padding-bottom: 16px;
+}
+
+.branch-header h2 {
+    margin: 0;
+    color: #4a4a68;
+}
+
+.branch-header p {
+    margin: 0;
+    color: #6c6c80;
+    font-size: 0.95em;
+}
+
+.branch-cards {
+    margin-top: 20px;
+}
+
+.branch-cards .card-grid {
+    margin-top: 0;
+}
+
+.branch-empty {
+    margin-top: 15px;
+    color: #888;
+    font-style: italic;
+}
+
 /* Status badges */
 .status {
     display: inline-block;
@@ -517,10 +567,20 @@ tr:hover {
 /* Search box */
 .search-box {
     margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
 .search-box input {
-    max-width: 400px;
+    flex: 2;
+    min-width: 240px;
+    max-width: none;
+}
+
+.search-box select {
+    flex: 1;
+    min-width: 200px;
 }
 
 /* Profile */

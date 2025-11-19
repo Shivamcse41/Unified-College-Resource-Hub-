@@ -82,14 +82,14 @@ Login Success → User Dashboard Show
 ```
 User → Upload Form Fill:
   - Title: "Data Structures Notes"
-  - Subject: "Computer Science"
-  - File: Select PDF (max 10 MB)
+  - Branch (dropdown): "Computer Science and Engineering"
+  - File: Select PDF (max 50 MB)
   ↓
 Form Submit
   ↓
 Validation:
   - PDF file check
-  - Size check (< 10 MB)
+  - Size check (< 50 MB)
   ↓
 Generate UUID for note ID
   ↓
@@ -253,9 +253,14 @@ Fetch Approved Notes:
   SELECT * FROM notes WHERE status = 'approved'
   ORDER BY approved_at DESC
   ↓
-Display Cards:
-  - Title, Subject, Uploader, Date
-  - "View PDF" button
+Branch-wise Sections:
+  - Civil, Electrical, Electronics, Mechanical, Computer Science
+  - Each section shows cards (Title, Branch, Uploader, Date)
+  - "View PDF" + "Download PDF" buttons
+  ↓
+Branch Filter Dropdown:
+  - Select "All Branches" or a specific branch
+  - Works alongside search to narrow notes quickly
   ↓
 Search Functionality:
   - Filter by title or subject (client-side)

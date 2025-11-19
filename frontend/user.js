@@ -306,6 +306,11 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
     const file = fileInput.files[0];
 
     // Validation
+    if (!subject) {
+        messageDiv.innerHTML = '<div class="message error">Please select your branch.</div>';
+        return;
+    }
+
     if (!file) {
         messageDiv.innerHTML = '<div class="message error">Please select a PDF file.</div>';
         return;
@@ -316,8 +321,8 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
         return;
     }
 
-    if (file.size > 10 * 1024 * 1024) {
-        messageDiv.innerHTML = '<div class="message error">File size must be less than 10 MB.</div>';
+    if (file.size > 50 * 1024 * 1024) {
+        messageDiv.innerHTML = '<div class="message error">File size must be less than 50 MB.</div>';
         return;
     }
 
