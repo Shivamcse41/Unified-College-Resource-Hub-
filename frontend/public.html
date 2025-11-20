@@ -25,15 +25,27 @@
         <!-- Search Box -->
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="Search by title or branch..." onkeyup="filterNotes()">
-            <select id="branchFilter" aria-label="Filter notes by branch" onchange="setBranchFilter(this.value)">
-                <option value="all" selected>All Branches</option>
+            <select id="branchFilter" aria-label="Filter notes by branch" onchange="handleBranchSelection(this.value)">
+                <option value="" selected disabled>Select Branch</option>
                 <option value="civil">Civil Engineering</option>
                 <option value="electrical">Electrical Engineering</option>
                 <option value="electronics">Electronics Engineering</option>
                 <option value="mechanical">Mechanical Engineering</option>
                 <option value="cse">Computer Science and Engineering</option>
             </select>
+            <select id="semesterFilter" aria-label="Filter notes by semester" onchange="handleSemesterSelection(this.value)" disabled>
+                <option value="" selected disabled>Select Semester</option>
+                <option value="1st Semester">1st Semester</option>
+                <option value="2nd Semester">2nd Semester</option>
+                <option value="3rd Semester">3rd Semester</option>
+                <option value="4th Semester">4th Semester</option>
+                <option value="5th Semester">5th Semester</option>
+                <option value="6th Semester">6th Semester</option>
+            </select>
         </div>
+        <p style="font-size: 0.95rem; color: #4b5563; margin-top: -10px; margin-bottom: 20px;">
+            Select your branch and semester to view the correct notes.
+        </p>
 
         <!-- Notes List -->
         <div id="notesList" class="branch-sections">

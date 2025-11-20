@@ -302,12 +302,18 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
 
     const title = document.getElementById('noteTitle').value.trim();
     const subject = document.getElementById('noteSubject').value.trim();
+    const semester = document.getElementById('noteSemester').value.trim();
     const fileInput = document.getElementById('noteFile');
     const file = fileInput.files[0];
 
     // Validation
     if (!subject) {
         messageDiv.innerHTML = '<div class="message error">Please select your branch.</div>';
+        return;
+    }
+
+    if (!semester) {
+        messageDiv.innerHTML = '<div class="message error">Please select the semester.</div>';
         return;
     }
 
@@ -352,6 +358,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
                 id: noteId,
                 title: title,
                 subject: subject,
+                semester: semester,
                 uploader_uid: user.id,
                 uploader_name: user.email,
                 file_path: filePath,
@@ -363,6 +370,11 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
         // Success
         messageDiv.innerHTML = '<div class="message success">PDF uploaded successfully! Waiting for admin approval.</div>';
         document.getElementById('uploadForm').reset();
+        const fileLabel = document.querySelector('.file-text');
+        if (fileLabel) {
+            fileLabel.textContent = 'Choose PDF file';
+            fileLabel.style.color = '';
+        }
 
         // Refresh my uploads if on that tab
         if (document.getElementById('myUploadsTab').classList.contains('active')) {
@@ -396,7 +408,7 @@ async function loadMyUploads() {
         }
 
         // Create table
-        let html = '<table><thead><tr><th>Title</th><th>Branch</th><th>Status</th><th>Uploaded At</th><th>Action</th></tr></thead><tbody>';
+        let html = '<table><thead><tr><th>Title</th><th>Branch</th><th>Semester</th><th>Status</th><th>Uploaded At</th><th>Action</th></tr></thead><tbody>';
 
         notes.forEach(note => {
             const date = new Date(note.uploaded_at).toLocaleDateString();
@@ -405,6 +417,7 @@ async function loadMyUploads() {
                 <tr>
                     <td>${escapeHtml(note.title)}</td>
                     <td>${escapeHtml(note.subject)}</td>
+                    <td>${escapeHtml(note.semester || 'N/A')}</td>
                     <td><span class="status ${statusClass}">${note.status}</span></td>
                     <td>${date}</td>
                     <td>

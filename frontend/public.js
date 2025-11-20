@@ -40,7 +40,9 @@ const branchCardContainers = {};
 const branchEmptyElements = {};
 const branchSections = {};
 let listContainer = null;
-let currentBranchFilter = 'all';
+let currentBranchFilter = '';
+let currentSemesterFilter = '';
+let currentSearchQuery = '';
 
 // Load approved notes on page load
 document.addEventListener('DOMContentLoaded', async () => {
@@ -89,11 +91,47 @@ async function loadApprovedNotes() {
         if (error) throw error;
 
         allNotes = notes || [];
-
-        displayNotes(allNotes);
+        refreshNotesDisplay();
     } catch (error) {
         showGlobalMessage(`Error loading notes: ${error.message}`, 'error');
     }
+}
+
+function refreshNotesDisplay() {
+    const branchSelected = Boolean(currentBranchFilter);
+    const semesterSelected = Boolean(currentSemesterFilter);
+
+    if (!branchSelected) {
+        hideAllBranchSections();
+        showGlobalMessage('Please select your branch to continue.', 'info');
+        return;
+    }
+
+    if (!semesterSelected) {
+        hideAllBranchSections();
+        showGlobalMessage('Now select your semester to view the notes.', 'info');
+        return;
+    }
+
+    removeGlobalMessage();
+
+    let filtered = allNotes;
+
+    if (currentSearchQuery) {
+        filtered = filtered.filter(note => {
+            const title = (note.title || '').toLowerCase();
+            const subject = (note.subject || '').toLowerCase();
+            return title.includes(currentSearchQuery) || subject.includes(currentSearchQuery);
+        });
+    }
+
+    filtered = filtered.filter(note => {
+        const noteBranch = resolveBranchId(note.subject);
+        const noteSemester = getNoteSemester(note).toLowerCase();
+        return noteBranch === currentBranchFilter && noteSemester === currentSemesterFilter.toLowerCase();
+    });
+
+    displayNotes(filtered);
 }
 
 // Display notes (with optional filtering)
@@ -101,7 +139,7 @@ function displayNotes(notes) {
     const grouped = groupNotesByBranch(notes);
     const hasAnyNotes = BRANCHES.some(branch => (grouped[branch.id] || []).length > 0);
     if (!hasAnyNotes) {
-        showGlobalMessage('No notes match your search.', 'info');
+        showGlobalMessage('No notes available for this branch and semester yet.', 'info');
     } else {
         removeGlobalMessage();
     }
@@ -130,32 +168,36 @@ function displayNotes(notes) {
 
 // Filter notes by search query
 function filterNotes() {
-    const searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
-    
-    if (!searchQuery) {
-        displayNotes(allNotes);
-        return;
-    }
-
-    const filtered = allNotes.filter(note => {
-        const title = note.title.toLowerCase();
-        const subject = note.subject ? note.subject.toLowerCase() : '';
-        return title.includes(searchQuery) || subject.includes(searchQuery);
-    });
-
-    displayNotes(filtered);
+    currentSearchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
+    refreshNotesDisplay();
 }
 
-function setBranchFilter(value) {
-    currentBranchFilter = value || 'all';
-    // Re-run current search to refresh groupings
-    filterNotes();
+function handleBranchSelection(value) {
+    currentBranchFilter = value || '';
+    const semesterSelect = document.getElementById('semesterFilter');
+    if (semesterSelect) {
+        semesterSelect.disabled = !currentBranchFilter;
+        if (!currentBranchFilter) {
+            semesterSelect.value = '';
+            currentSemesterFilter = '';
+        }
+    }
+    refreshNotesDisplay();
+}
+
+function handleSemesterSelection(value) {
+    currentSemesterFilter = value || '';
+    refreshNotesDisplay();
 }
 
 function applyBranchFilter() {
     BRANCHES.forEach(branch => {
         const section = branchSections[branch.id];
         if (!section) return;
+        if (!currentBranchFilter) {
+            section.style.display = 'none';
+            return;
+        }
         const shouldShow = currentBranchFilter === 'all' || currentBranchFilter === branch.id;
         section.style.display = shouldShow ? '' : 'none';
     });
@@ -201,11 +243,13 @@ function createNoteCard(note) {
     const approvedDate = note.approved_at
         ? new Date(note.approved_at).toLocaleDateString()
         : 'N/A';
+    const semesterLabel = getNoteSemester(note);
 
     return `
         <div class="card">
             <div class="card-title">${escapeHtml(note.title)}</div>
             <div class="card-meta"><strong>Branch:</strong> ${escapeHtml(note.subject || 'N/A')}</div>
+            <div class="card-meta"><strong>Semester:</strong> ${escapeHtml(semesterLabel)}</div>
             <div class="card-meta"><strong>Uploaded by:</strong> ${escapeHtml(note.uploader_name || 'Unknown')}</div>
             <div class="card-meta"><strong>Approved on:</strong> ${approvedDate}</div>
             <div class="card-actions" style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
@@ -236,11 +280,24 @@ function removeGlobalMessage() {
     }
 }
 
+function hideAllBranchSections() {
+    BRANCHES.forEach(branch => {
+        const section = branchSections[branch.id];
+        if (!section) return;
+        section.style.display = 'none';
+    });
+}
+
 function normalizeText(text) {
     return (text || '')
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, ' ')
         .trim();
+}
+
+function getNoteSemester(note) {
+    const value = (note.semester || '').trim();
+    return value || '5th Semester';
 }
 
 // View PDF
